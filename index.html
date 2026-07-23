@@ -87,6 +87,54 @@
       box-shadow: 0 0 6px rgba(255, 0, 0, 0.5);
     }
 
+    /* تنسيق عداد الوقت */
+    .timer-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .timer-item {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: rgba(255,255,255,0.05);
+      padding: 2px 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,0,0,0.1);
+    }
+    .timer-item .num {
+      font-size: 16px;
+      font-weight: 800;
+      color: #ff0000;
+      min-width: 20px;
+      text-align: center;
+    }
+    .timer-item .lbl {
+      font-size: 10px;
+      color: #9ca3af;
+      font-weight: 500;
+    }
+    .timer-sep {
+      color: #6b7280;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .header-text-sm {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    @media (max-width: 640px) {
+      .timer-item .num { font-size: 14px; min-width: 16px; }
+      .timer-item .lbl { font-size: 8px; }
+      .timer-item { padding: 1px 5px; gap: 1px; }
+      .header-text-sm { font-size: 11px; }
+      .header-discount { font-size: 12px; }
+    }
+
     .roadmap-section { position: relative; padding: 2rem 0 4rem; max-width: 100%; margin: 0 auto; overflow: visible; }
     .roadmap-container { position: relative; margin: 0 auto; padding: 0 1rem; max-width: 900px; width: 100%; box-sizing: border-box; overflow: visible; }
     .stations-holder {
@@ -391,24 +439,311 @@
       font-weight: 700; font-size: 1.1rem; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2); color: white; background: rgba(255,255,255,0.05);
     }
     .payment-btn:hover { background: rgba(255,255,255,0.15); transform: translateY(-2px); }
-    .paypal-btn { background: rgba(0, 48, 135, 0.5); } .crypto-btn { background: rgba(247, 147, 26, 0.5); } .sham-btn { background: rgba(0, 200, 83, 0.5); }
-    .whatsapp-btn { background: #25D366; color: white; border: none; box-shadow: 0 0 8px rgba(37, 211, 102, 0.5); }
-    .whatsapp-btn:hover { background: #20b859; transform: translateY(-2px); box-shadow: 0 0 15px rgba(37, 211, 102, 0.8); }
+    .paypal-btn { background: rgba(0, 48, 135, 0.5); } 
+    .crypto-btn { background: rgba(247, 147, 26, 0.5); } 
+    .sham-btn { background: rgba(0, 200, 83, 0.5); }
+    .card-btn { background: rgba(30, 58, 138, 0.6); border: 1px solid rgba(255,255,255,0.3); }
 
-    .whatsapp-float {
-      position: fixed; bottom: 20px; right: 20px; z-index: 999;
-      width: 56px; height: 56px; border-radius: 50%;
-      background: #25D366; color: white;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
-      transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1);
-      opacity: 0; transform: translateY(30px); pointer-events: none;
+    /* Page Styles */
+    .crypto-page, .card-page, .paypal-page, .sham-page {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(2, 7, 20, 0.95);
+      z-index: 2000;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow-y: auto;
     }
-    .whatsapp-float.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
-    .whatsapp-float i { font-size: 28px; }
-    @media (max-width: 480px) {
-      .whatsapp-float { width: 48px; height: 48px; bottom: 15px; right: 15px; }
-      .whatsapp-float i { font-size: 24px; }
+    .crypto-page.active, .card-page.active, .paypal-page.active, .sham-page.active {
+      display: flex;
+    }
+    .crypto-page .crypto-box, .card-page .card-box, .paypal-page .paypal-box, .sham-page .sham-box {
+      background: linear-gradient(to bottom left, #1a1f2e, #020714);
+      border: 1px solid rgba(0, 200, 83, 0.4);
+      border-radius: 44px;
+      padding: 2rem 1.5rem;
+      max-width: 550px;
+      width: 100%;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+      position: relative;
+      margin: 20px auto;
+    }
+    .crypto-page .crypto-box .close-crypto,
+    .card-page .card-box .close-card,
+    .paypal-page .paypal-box .close-paypal,
+    .sham-page .sham-box .close-sham {
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .crypto-page .crypto-box .close-crypto:hover,
+    .card-page .card-box .close-card:hover,
+    .paypal-page .paypal-box .close-paypal:hover,
+    .sham-page .sham-box .close-sham:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    .crypto-page .crypto-box h2,
+    .card-page .card-box h2,
+    .paypal-page .paypal-box h2,
+    .sham-page .sham-box h2 {
+      color: white;
+      font-size: 1.3rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      margin-top: 0.5rem;
+    }
+    .crypto-page .crypto-box .sub-text,
+    .card-page .card-box .sub-text,
+    .paypal-page .paypal-box .sub-text,
+    .sham-page .sham-box .sub-text {
+      color: #e5e7eb;
+      font-size: 0.95rem;
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+    .crypto-page .crypto-box .crypto-image {
+      width: 100%;
+      max-width: 300px;
+      display: block;
+      margin: 0 auto 1rem auto;
+      border-radius: 20px;
+      background: transparent;
+    }
+    .crypto-page .crypto-box .wallet-address,
+    .card-page .card-box .wallet-address,
+    .paypal-page .paypal-box .wallet-address,
+    .sham-page .sham-box .wallet-address {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(0,200,83,0.3);
+      border-radius: 16px;
+      padding: 1rem;
+      color: #00e676;
+      font-size: 0.85rem;
+      text-align: center;
+      word-break: break-all;
+      margin: 1rem 0;
+      font-family: monospace;
+      direction: ltr;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .crypto-page .crypto-box .wallet-address:hover,
+    .card-page .card-box .wallet-address:hover,
+    .paypal-page .paypal-box .wallet-address:hover,
+    .sham-page .sham-box .wallet-address:hover {
+      background: rgba(0,200,83,0.1);
+      border-color: #00e676;
+    }
+    .crypto-page .crypto-box .copy-btn,
+    .card-page .card-box .copy-btn,
+    .paypal-page .paypal-box .copy-btn,
+    .sham-page .sham-box .copy-btn {
+      background: rgba(0,200,83,0.2);
+      border: 1px solid #00c853;
+      color: #00e676;
+      padding: 8px 24px;
+      border-radius: 9999px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+      font-size: 0.9rem;
+    }
+    .crypto-page .crypto-box .copy-btn:hover,
+    .card-page .card-box .copy-btn:hover,
+    .paypal-page .paypal-box .copy-btn:hover,
+    .sham-page .sham-box .copy-btn:hover {
+      background: #00c853;
+      color: white;
+    }
+    .crypto-page .crypto-box .whatsapp-btn-crypto,
+    .card-page .card-box .whatsapp-btn-crypto,
+    .paypal-page .paypal-box .whatsapp-btn-crypto,
+    .sham-page .sham-box .whatsapp-btn-crypto {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #25D366;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      margin-top: 0.5rem;
+    }
+    .crypto-page .crypto-box .whatsapp-btn-crypto:hover,
+    .card-page .card-box .whatsapp-btn-crypto:hover,
+    .paypal-page .paypal-box .whatsapp-btn-crypto:hover,
+    .sham-page .sham-box .whatsapp-btn-crypto:hover {
+      background: #1ebe5c;
+      transform: scale(1.02);
+    }
+    .crypto-page .crypto-box .divider,
+    .card-page .card-box .divider,
+    .paypal-page .paypal-box .divider,
+    .sham-page .sham-box .divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin: 1rem 0;
+    }
+    .crypto-page .crypto-box .how-to-btn,
+    .card-page .card-box .how-to-btn,
+    .paypal-page .paypal-box .how-to-btn,
+    .sham-page .sham-box .how-to-btn {
+      background: transparent;
+      border: 1px solid rgba(0,200,83,0.4);
+      color: #00e676;
+      padding: 10px 20px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .crypto-page .crypto-box .how-to-btn:hover,
+    .card-page .card-box .how-to-btn:hover,
+    .paypal-page .paypal-box .how-to-btn:hover,
+    .sham-page .sham-box .how-to-btn:hover {
+      background: rgba(0,200,83,0.1);
+      border-color: #00e676;
+    }
+    .crypto-page .crypto-box .how-to-content,
+    .card-page .card-box .how-to-content,
+    .paypal-page .paypal-box .how-to-content,
+    .sham-page .sham-box .how-to-content {
+      display: none;
+      margin-top: 1rem;
+      padding: 1.2rem;
+      background: rgba(255,255,255,0.03);
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+    .crypto-page .crypto-box .how-to-content.open,
+    .card-page .card-box .how-to-content.open,
+    .paypal-page .paypal-box .how-to-content.open,
+    .sham-page .sham-box .how-to-content.open {
+      display: block;
+    }
+    .crypto-page .crypto-box .how-to-content p,
+    .card-page .card-box .how-to-content p,
+    .paypal-page .paypal-box .how-to-content p,
+    .sham-page .sham-box .how-to-content p {
+      color: #e5e7eb;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      margin-bottom: 0.8rem;
+    }
+    .crypto-page .crypto-box .how-to-content .video-link,
+    .card-page .card-box .how-to-content .video-link,
+    .paypal-page .paypal-box .how-to-content .video-link,
+    .sham-page .sham-box .how-to-content .video-link {
+      display: block;
+      color: #00e676;
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 6px 0;
+      transition: color 0.3s ease;
+    }
+    .crypto-page .crypto-box .how-to-content .video-link:hover,
+    .card-page .card-box .how-to-content .video-link:hover,
+    .paypal-page .paypal-box .how-to-content .video-link:hover,
+    .sham-page .sham-box .how-to-content .video-link:hover {
+      color: #69f0ae;
+      text-decoration: underline;
+    }
+    .crypto-page .crypto-box .how-to-content .video-link i,
+    .card-page .card-box .how-to-content .video-link i,
+    .paypal-page .paypal-box .how-to-content .video-link i,
+    .sham-page .sham-box .how-to-content .video-link i {
+      margin-left: 8px;
+    }
+    .crypto-page .crypto-box .how-to-content .step-title,
+    .card-page .card-box .how-to-content .step-title,
+    .paypal-page .paypal-box .how-to-content .step-title,
+    .sham-page .sham-box .how-to-content .step-title {
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-top: 0.8rem;
+      margin-bottom: 0.3rem;
+    }
+    .crypto-page .crypto-box .how-to-content .step-title i,
+    .card-page .card-box .how-to-content .step-title i,
+    .paypal-page .paypal-box .how-to-content .step-title i,
+    .sham-page .sham-box .how-to-content .step-title i {
+      color: #00e676;
+      margin-left: 8px;
+    }
+    .crypto-page .crypto-box .how-to-content .video-wrapper,
+    .card-page .card-box .how-to-content .video-wrapper,
+    .paypal-page .paypal-box .how-to-content .video-wrapper,
+    .sham-page .sham-box .how-to-content .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 16px;
+      margin: 0.8rem 0;
+    }
+    .crypto-page .crypto-box .how-to-content .video-wrapper iframe,
+    .card-page .card-box .how-to-content .video-wrapper iframe,
+    .paypal-page .paypal-box .how-to-content .video-wrapper iframe,
+    .sham-page .sham-box .how-to-content .video-wrapper iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 16px;
+    }
+    .crypto-page .crypto-box .how-to-content .link-btn,
+    .card-page .card-box .how-to-content .link-btn,
+    .paypal-page .paypal-box .how-to-content .link-btn,
+    .sham-page .sham-box .how-to-content .link-btn {
+      display: inline-block;
+      background: rgba(0,200,83,0.15);
+      border: 1px solid rgba(0,200,83,0.3);
+      color: #00e676;
+      padding: 10px 20px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin: 0.5rem 0;
+    }
+    .crypto-page .crypto-box .how-to-content .link-btn:hover,
+    .card-page .card-box .how-to-content .link-btn:hover,
+    .paypal-page .paypal-box .how-to-content .link-btn:hover,
+    .sham-page .sham-box .how-to-content .link-btn:hover {
+      background: rgba(0,200,83,0.25);
+      border-color: #00e676;
     }
   </style>
 </head>
@@ -418,15 +753,31 @@
   <div class="header-content">
     <div class="header-badge">
       <span class="relative flex h-2.5 w-2.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff0000] opacity-75"></span><span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#ff0000]"></span></span>
-      <span class="header-text">عرض خاص لأول 10 أشخاص فقط <span class="header-discount">خصم 90%</span></span>
+      <span class="header-text-sm">عرض خاص لأول 100 شخص فقط <span class="header-discount">خصم 80%</span></span>
     </div>
     <div class="header-timer">
-      <span class="text-gray-400 text-sm">العرض سينتهي بعد:</span>
-      <div class="flex items-center gap-1"><span class="time-number" id="offerHours">24</span><span class="time-label">ساعة</span></div>
-      <span class="time-separator">:</span>
-      <div class="flex items-center gap-1"><span class="time-number" id="offerMinutes">00</span><span class="time-label">دقيقة</span></div>
-      <span class="time-separator">:</span>
-      <div class="flex items-center gap-1"><span class="time-number" id="offerSeconds">00</span><span class="time-label">ثانية</span></div>
+      <span class="text-gray-400 text-xs">العرض سينتهي بعد:</span>
+      <div class="timer-wrapper">
+        <div class="timer-item">
+          <span class="num" id="offerDays">00</span>
+          <span class="lbl">يوم</span>
+        </div>
+        <span class="timer-sep">:</span>
+        <div class="timer-item">
+          <span class="num" id="offerHours">00</span>
+          <span class="lbl">ساعة</span>
+        </div>
+        <span class="timer-sep">:</span>
+        <div class="timer-item">
+          <span class="num" id="offerMinutes">00</span>
+          <span class="lbl">دقيقة</span>
+        </div>
+        <span class="timer-sep">:</span>
+        <div class="timer-item">
+          <span class="num" id="offerSeconds">00</span>
+          <span class="lbl">ثانية</span>
+        </div>
+      </div>
     </div>
   </div>
   <div class="header-border-red"></div>
@@ -458,7 +809,7 @@
           <span class="animated-gradient-text font-black">من الفكرة إلى البيع</span>
         </p>
         <div class="mt-6 lg:hidden reveal-scale" data-delay="350">
-          <img src="images/hero.PNG" alt="ريبل ستارت" class="hero-image" style="background: transparent; border: none; box-shadow: none;" loading="lazy" onerror="this.style.display='none'">
+          <img src="images/hero.png" alt="ريبل ستارت" class="hero-image" style="background: transparent; border: none; box-shadow: none;" loading="lazy" onerror="this.style.display='none'">
         </div>
         <div class="mt-6 flex justify-center lg:justify-start reveal-scale" data-delay="400">
           <button onclick="document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' })" class="group relative inline-flex items-center gap-3 green-gradient text-white font-bold text-xl px-12 py-4 rounded-full green-glow btn-wide">
@@ -487,7 +838,7 @@
         </div>
       </div>
       <div class="flex-1 w-full max-w-xl lg:max-w-none hidden lg:flex flex-col items-center gap-2 reveal-scale" data-delay="200">
-        <img src="images/hero.PNG" alt="ريبل ستارت" class="hero-image" style="background: transparent; border: none; box-shadow: none;" loading="lazy" onerror="this.style.display='none'">
+        <img src="images/hero.png" alt="ريبل ستارت" class="hero-image" style="background: transparent; border: none; box-shadow: none;" loading="lazy" onerror="this.style.display='none'">
         <span class="green-badge mt-2">طريق أول 10,000$</span>
       </div>
     </div>
@@ -502,7 +853,7 @@
     <h2 class="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-extrabold text-white text-center mb-6 mt-1 reveal-fade-up" data-delay="100">إليك ما ستتمكن من الوصول إليه</h2>
     <div class="grid-2col">
       <div class="feature-block" id="featureBlock1">
-        <img src="images/feature-1.PNG" alt="8 وحدات من المحتوى" class="feature-image reveal-scale" data-delay="200" loading="lazy" onerror="this.style.backgroundColor='#1a1f2e'; this.style.minHeight='200px'">
+        <img src="images/feature-1.png" alt="8 وحدات من المحتوى" class="feature-image reveal-scale" data-delay="200" loading="lazy" onerror="this.style.backgroundColor='#1a1f2e'; this.style.minHeight='200px'">
         <div class="feature-header" id="firstFeatureHeader"><i class="fas fa-layer-group feature-icon-small"></i><h3>8 وحدات من المحتوى</h3></div>
         <div class="feature-list">
           <div class="feature-card flex items-center gap-2 reveal-scale" data-delay="300"><i class="fas fa-check"></i><span class="white-subtext text-sm font-medium">من العقلية إلى سحب الأرباح خطوة بخطوة</span></div>
@@ -511,7 +862,7 @@
         </div>
       </div>
       <div class="feature-block" id="featureBlock2">
-        <img src="images/feature-2.jpg" alt="دعم من مجتمع خاص" class="feature-image reveal-scale" data-delay="200" loading="lazy" onerror="this.style.backgroundColor='#1a1f2e'; this.style.minHeight='200px'">
+        <img src="images/feature-2.png" alt="دعم من مجتمع خاص" class="feature-image reveal-scale" data-delay="200" loading="lazy" onerror="this.style.backgroundColor='#1a1f2e'; this.style.minHeight='200px'">
         <div class="feature-header"><i class="fas fa-users feature-icon-small"></i><h3>دعم من مجتمع خاص</h3></div>
         <div class="feature-list">
           <div class="feature-card flex items-center gap-2 reveal-scale" data-delay="300"><i class="fas fa-check"></i><span class="white-subtext text-sm font-medium">أبدأ رحلتك مع أشخاص لهم نفس تفكيرك</span></div>
@@ -634,7 +985,7 @@
   <div class="pricing-card p-6 md:p-10 relative overflow-hidden">
     <div class="relative-z-10 flex flex-col items-center">
       <div class="pricing-feature-card mb-1 reveal-fade-up flex justify-center" data-delay="75">
-        <img src="images/logo.PNG" alt="ريبل ستارت - نظام البداية الذكية" loading="lazy" onerror="this.style.minHeight='60px'; this.style.backgroundColor='#1a1f2e'">
+        <img src="images/logo.png" alt="ريبل ستارت - نظام البداية الذكية" loading="lazy" onerror="this.style.minHeight='60px'; this.style.backgroundColor='#1a1f2e'">
       </div>
       <p class="sub-heading text-center text-sm md:text-base font-bold mt-0.5 mb-2 reveal-fade-up text-white" data-delay="85">الخريطة الكاملة من الصفر خطوة بخطوة</p>
       <hr class="price-divider mb-6 reveal-fade-up" data-delay="95">
@@ -713,77 +1064,360 @@
 
 <footer class="py-6 text-center text-white text-sm border-t border-white/5 reveal-fade-up">© 2026 ريبل ستارت</footer>
 
+<!-- Payment Modal -->
 <div id="paymentModal" class="modal-overlay" onclick="closePaymentModal(event)">
   <div class="modal-content" onclick="event.stopPropagation()">
     <button onclick="closePaymentModal()" class="modal-close-btn">&times;</button>
-    <h3 class="text-xl font-bold text-white mb-5">اختر طريقة الدفع التي تناسبك</h3>
-    <a href="https://www.tekrams.com/product/bf753f4b-f674-4864-ae63-9dd26145c3fa?ref=TKR-SY8WJJ" target="_blank" class="payment-btn paypal-btn"><i class="fab fa-paypal text-2xl"></i><span>الدفع عبر PayPal</span></a>
-    <a href="https://wa.me/963934398471?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%0A%D8%A7%D8%B1%D9%8A%D8%AF%20%D8%A3%D9%86%20%D8%A3%D9%86%D8%B6%D9%85%20%D8%A5%D9%84%D9%89%20%D8%B1%D9%8A%D8%A8%D9%84%20%D8%B3%D8%AA%D8%A7%D8%B1%D8%AA%20%D8%B9%D9%86%20%D8%B7%D8%B1%D9%8A%D9%82%20%D8%A7%D9%84%D8%AF%D9%81%D8%B9%20%D8%A8%D8%A7%D9%84%D8%B9%D9%85%D9%84%D8%A7%D8%AA%20%D8%A7%D9%84%D8%B1%D9%82%D9%85%D9%8A%D8%A9" target="_blank" class="payment-btn crypto-btn"><i class="fab fa-bitcoin text-2xl"></i><span>الدفع بالعملات الرقمية (USDT)</span></a>
-    <a href="https://www.tekrams.com/product/bf753f4b-f674-4864-ae63-9dd26145c3fa?ref=TKR-SY8WJJ" target="_blank" class="payment-btn sham-btn"><i class="fas fa-money-bill-wave text-2xl"></i><span>الدفع عبر شام كاش</span></a>
-    <div class="mt-4 text-center">
-      <p class="text-gray-300 text-sm mb-2">إذا بدك تدفع بطريقة أخرى تواصل معنا لكي نوفر لك المزيد من طرق الدفع التي تناسبك</p>
-      <a href="https://wa.me/963934398471?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D8%B9%D9%86%D8%AF%D9%8A%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%83%D9%88%D8%B1%D8%B3%20%D8%B1%D9%8A%D8%A8%D9%84%20%D8%B3%D8%AA%D8%A7%D8%B1%D8%AA" target="_blank" class="payment-btn whatsapp-btn"><i class="fab fa-whatsapp text-2xl"></i><span>تواصل واتساب</span></a>
+    <h3 class="text-xl font-bold text-white mb-5 text-center">اختر طريقة الدفع المناسبة</h3>
+    
+    <button onclick="openCardPage()" class="payment-btn card-btn" style="cursor:pointer;">
+      <i class="fas fa-credit-card text-2xl"></i>
+      <span>الدفع بالبطاقات البنكية</span>
+    </button>
+    
+    <button onclick="openPaypalPage()" class="payment-btn paypal-btn" style="cursor:pointer;">
+      <i class="fab fa-paypal text-2xl"></i>
+      <span>الدفع عبر PayPal</span>
+    </button>
+    
+    <button onclick="openShamPage()" class="payment-btn sham-btn" style="cursor:pointer;">
+      <i class="fas fa-money-bill-wave text-2xl"></i>
+      <span>الدفع عبر شام كاش</span>
+    </button>
+    
+    <button onclick="openCryptoPage()" class="payment-btn crypto-btn" style="cursor:pointer;">
+      <i class="fab fa-bitcoin text-2xl"></i>
+      <span>الدفع بالعملات الرقمية (USDT)</span>
+    </button>
+  </div>
+</div>
+
+<!-- Crypto Page -->
+<div id="cryptoPage" class="crypto-page">
+  <div class="crypto-box">
+    <button class="close-crypto" onclick="closeCryptoPage()">&times;</button>
+    <h2>💳 الدفع بالعملات الرقمية</h2>
+    <p class="sub-text">يمكنك الدفع عبر عملة <strong>USDT</strong> (شبكة TRC20)</p>
+    
+    <img src="images/crypto-payment.png" alt="الدفع بالعملات الرقمية" class="crypto-image" loading="lazy" onerror="this.style.display='none'">
+    
+    <div style="text-align:center; margin: 0.5rem 0 0.8rem;">
+      <button class="how-to-btn" onclick="toggleHowToCrypto()">
+        <i class="fas fa-question-circle"></i> 👈 انقر هنا لتتعلم كيفية الدفع بالعملات الرقمية
+      </button>
+    </div>
+    
+    <div id="howToContentCrypto" class="how-to-content">
+      <p>يمكنك الدفع بالعملات الرقمية عن طريق محفظة مثل <strong>Trust Wallet</strong> أو <strong>Binance</strong>…</p>
+      <p>يمكنك عن طريق التحويل من بطاقتك البنكية (فيزا أو ماستر كارد) التحويل إلى محفظة Binance عملة USDT، ومن ثم إرسال سعر الكورس إلى عنوان محفظتنا للانضمام إلى كورس <strong>ريبل ستارت</strong>.</p>
+      
+      <div class="step-title"><i class="fas fa-1"></i> شرح إنشاء حساب في Binance</div>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/TJ7Vfh38w7w" allowfullscreen loading="lazy"></iframe>
+      </div>
+      
+      <div class="step-title"><i class="fas fa-2"></i> شرح شحن حساب Binance</div>
+      <p style="font-size:0.85rem; color:#9ca3af;">طريقة P2P:</p>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/d9y1TM2ISd0" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <p style="font-size:0.85rem; color:#9ca3af; margin-top:0.5rem;">طريقة الشحن بالبطاقة البنكية:</p>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/Kvc39WmqQoU" allowfullscreen loading="lazy"></iframe>
+      </div>
+      
+      <div class="step-title"><i class="fas fa-3"></i> التحويل من Binance إلى محفظة ريبل ستارت</div>
+      <p style="font-size:0.85rem; color:#9ca3af;">عنوان محفظة فريق ريبل ستارت (Trust Wallet):</p>
+      <div class="wallet-address" onclick="copyWalletCrypto()" style="cursor:pointer; text-align:center; direction:ltr; color:#00e676; font-family:monospace; font-size:0.8rem; word-break:break-all; border:1px solid rgba(0,200,83,0.2); padding:0.8rem; border-radius:12px; background:rgba(255,255,255,0.05);">
+        TPvPPwM33d6MfkPsTtHSjScpXBATY5Ze1Y
+      </div>
+      <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/pE7ULv-MyfM" allowfullscreen loading="lazy"></iframe>
+      </div>
+    </div>
+    
+    <hr class="divider">
+    
+    <p style="color:#e5e7eb; font-size:0.9rem; text-align:center; margin-bottom:0.3rem;">قم بتحويل المبلغ إلى المحفظة التالية:</p>
+    <div class="wallet-address" id="walletAddressCrypto" onclick="copyWalletCrypto()">
+      TPvPPwM33d6MfkPsTtHSjScpXBATY5Ze1Y
+    </div>
+    <div style="text-align:center;">
+      <button class="copy-btn" onclick="copyWalletCrypto()">📋 نسخ العنوان</button>
+    </div>
+    
+    <hr class="divider">
+    
+    <p style="color:#e5e7eb; font-size:0.9rem; text-align:center;">بعد التحويل وإتمام الدفع</p>
+    <p style="color:#9ca3af; font-size:0.85rem; text-align:center; margin-bottom:1rem;">أرسل لنا صورة إثبات التحويل على هذا الرقم، وسنرد عليك بأقرب وقت</p>
+    
+    <div style="text-align:center;">
+      <a href="https://wa.me/963934398471?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%A3%D8%B1%D8%B3%D9%84%D8%AA%20%D8%B3%D8%B9%D8%B1%20%D8%A7%D8%B4%D8%AA%D8%B1%D8%A7%D9%83%20%D9%83%D9%88%D8%B1%D8%B3%20%D8%B1%D9%8A%D8%A8%D9%84%20%D8%B3%D8%AA%D8%A7%D8%B1%D8%AA%20%D8%A5%D9%84%D9%89%20%D9%85%D8%AD%D9%81%D8%B8%D8%A9%20%D9%81%D8%B1%D9%8A%D9%82%20%D8%B1%D9%8A%D8%A8%D9%84%20%D8%B3%D8%AA%D8%A7%D8%B1%D8%AA%0A%D9%88%D9%87%D8%B0%D8%A7%20%D9%87%D9%88%20%D8%B5%D9%88%D8%B1%D8%A9%20%D8%A7%D9%84%D8%A5%D8%AB%D8%A8%D8%A7%D8%AA%3A" target="_blank" class="whatsapp-btn-crypto">
+        <i class="fab fa-whatsapp"></i> تواصل عبر واتساب
+      </a>
     </div>
   </div>
 </div>
 
-<!-- أيقونة واتساب دائرية -->
-<a href="https://wa.me/963934398471?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D8%B9%D9%86%D8%AF%D9%8A%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%B9%D9%86%20%D9%83%D9%88%D8%B1%D8%B3%20%D8%B1%D9%8A%D8%A8%D9%84%20%D8%B3%D8%AA%D8%A7%D8%B1%D8%AA" target="_blank" id="whatsappFloat" class="whatsapp-float">
-  <i class="fab fa-whatsapp"></i>
-</a>
+<!-- Card Page -->
+<div id="cardPage" class="card-page">
+  <div class="card-box">
+    <button class="close-card" onclick="closeCardPage()">&times;</button>
+    <h2>💳 الدفع بالبطاقات البنكية</h2>
+    <p class="sub-text">كيفية الانضمام إلى <strong>ريبل ستارت</strong> عن طريق الدفع بالبطاقات البنكية</p>
+    
+    <div style="text-align:center; margin: 1rem 0;">
+      <a href="https://www.tekrams.com/product/bf753f4b-f674-4864-ae63-9dd26145c3fa?ref=TKR-SY8WJJ" target="_blank" class="link-btn" style="display:inline-block; background:rgba(0,200,83,0.15); border:1px solid rgba(0,200,83,0.3); color:#00e676; padding:12px 24px; border-radius:12px; text-decoration:none; font-weight:600; transition:all 0.3s ease;">
+        <i class="fas fa-external-link-alt"></i> رابط كورس ريبل ستارت - انقر هنا
+      </a>
+    </div>
+    
+    <p style="color:#e5e7eb; font-size:0.95rem; text-align:center; margin-bottom:0.5rem;">شاهد الفيديو لمعرفة كيفية إتمام الدفع والانضمام إلى ريبل ستارت:</p>
+    
+    <div class="video-wrapper">
+      <iframe src="https://www.youtube.com/embed/KbvU6MvHrvc" allowfullscreen loading="lazy"></iframe>
+    </div>
+    
+    <hr class="divider">
+    
+    <p style="color:#9ca3af; font-size:0.85rem; text-align:center;">بعد إتمام الدفع، سيتم إرسالك إلى رابط كورس ومجتمع ريبل ستارت ✅</p>
+  </div>
+</div>
+
+<!-- PayPal Page -->
+<div id="paypalPage" class="paypal-page">
+  <div class="paypal-box">
+    <button class="close-paypal" onclick="closePaypalPage()">&times;</button>
+    <h2>💳 الدفع عبر PayPal</h2>
+    <p class="sub-text">الانضمام إلى <strong>ريبل ستارت</strong> عن طريق الدفع عبر PayPal</p>
+    
+    <div style="text-align:center; margin: 1rem 0;">
+      <a href="https://www.tekrams.com/product/bf753f4b-f674-4864-ae63-9dd26145c3fa?ref=TKR-SY8WJJ" target="_blank" class="link-btn" style="display:inline-block; background:rgba(0,200,83,0.15); border:1px solid rgba(0,200,83,0.3); color:#00e676; padding:12px 24px; border-radius:12px; text-decoration:none; font-weight:600; transition:all 0.3s ease;">
+        <i class="fas fa-external-link-alt"></i> رابط كورس ريبل ستارت - انقر هنا
+      </a>
+    </div>
+    
+    <p style="color:#e5e7eb; font-size:0.95rem; text-align:center; margin-bottom:0.5rem;">وشاهد الفيديو لمعرفة كيفية الانضمام إلى ريبل ستارت عن طريق الدفع عبر PayPal:</p>
+    
+    <div class="video-wrapper">
+      <iframe src="https://www.youtube.com/embed/W1XfFbETPDM" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- Sham Page -->
+<div id="shamPage" class="sham-page">
+  <div class="sham-box">
+    <button class="close-sham" onclick="closeShamPage()">&times;</button>
+    <h2>💳 الدفع عبر شام كاش</h2>
+    <p class="sub-text">الانضمام إلى <strong>ريبل ستارت</strong> عن طريق الدفع بالشام كاش</p>
+    
+    <div style="text-align:center; margin: 1rem 0;">
+      <a href="https://www.tekrams.com/product/bf753f4b-f674-4864-ae63-9dd26145c3fa?ref=TKR-SY8WJJ" target="_blank" class="link-btn" style="display:inline-block; background:rgba(0,200,83,0.15); border:1px solid rgba(0,200,83,0.3); color:#00e676; padding:12px 24px; border-radius:12px; text-decoration:none; font-weight:600; transition:all 0.3s ease;">
+        <i class="fas fa-external-link-alt"></i> رابط كورس ريبل ستارت - انقر هنا
+      </a>
+    </div>
+    
+    <p style="color:#e5e7eb; font-size:0.95rem; text-align:center; margin-bottom:0.5rem;">وشاهد الفيديو لمعرفة كيفية الانضمام إلى ريبل ستارت عن طريق الدفع بالشام كاش:</p>
+    
+    <div class="video-wrapper">
+      <iframe src="https://www.youtube.com/embed/uIa_t-w2OcI" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</div>
 
 <script>
+  // ===================== PAYMENT MODAL =====================
   function openPaymentModal() {
     document.getElementById('paymentModal').classList.add('active');
-    const wa = document.getElementById('whatsappFloat');
-    if (wa) wa.classList.remove('show');
   }
   function closePaymentModal(event) {
     if (event && event.target !== event.currentTarget) return;
     document.getElementById('paymentModal').classList.remove('active');
-    const wa = document.getElementById('whatsappFloat');
-    if (wa) wa.classList.add('show');
   }
 
-  setTimeout(() => {
-    const wa = document.getElementById('whatsappFloat');
-    if (wa) wa.classList.add('show');
-  }, 30000);
-  
-  (function(){
-    const $ = (id) => document.getElementById(id);
-    const btn = document.getElementById('storyToggleBtn');
-    const extra = document.getElementById('storyExtra');
-    if (btn && extra) {
-      btn.addEventListener('click', () => {
-        const hidden = extra.classList.contains('story-hidden');
-        if (hidden) { extra.classList.remove('story-hidden'); btn.textContent = 'إظهار أقل'; }
-        else { extra.classList.add('story-hidden'); btn.textContent = 'عرض المزيد…'; }
-      });
+  // ===================== CRYPTO PAGE =====================
+  function openCryptoPage() {
+    document.getElementById('cryptoPage').classList.add('active');
+    document.getElementById('paymentModal').classList.remove('active');
+  }
+  function closeCryptoPage() {
+    document.getElementById('cryptoPage').classList.remove('active');
+    document.getElementById('howToContentCrypto').classList.remove('open');
+  }
+  function toggleHowToCrypto() {
+    document.getElementById('howToContentCrypto').classList.toggle('open');
+  }
+  function copyWalletCrypto() {
+    const wallet = document.getElementById('walletAddressCrypto').innerText;
+    navigator.clipboard.writeText(wallet).then(() => {
+      alert('✅ تم نسخ عنوان المحفظة!');
+    }).catch(() => {
+      const range = document.createRange();
+      range.selectNode(document.getElementById('walletAddressCrypto'));
+      window.getSelection().removeAllRanges();
+      window.getSelection().addRange(range);
+      document.execCommand('copy');
+      alert('✅ تم نسخ عنوان المحفظة!');
+    });
+  }
+
+  // ===================== CARD PAGE =====================
+  function openCardPage() {
+    document.getElementById('cardPage').classList.add('active');
+    document.getElementById('paymentModal').classList.remove('active');
+  }
+  function closeCardPage() {
+    document.getElementById('cardPage').classList.remove('active');
+  }
+
+  // ===================== PAYPAL PAGE =====================
+  function openPaypalPage() {
+    document.getElementById('paypalPage').classList.add('active');
+    document.getElementById('paymentModal').classList.remove('active');
+  }
+  function closePaypalPage() {
+    document.getElementById('paypalPage').classList.remove('active');
+  }
+
+  // ===================== SHAM PAGE =====================
+  function openShamPage() {
+    document.getElementById('shamPage').classList.add('active');
+    document.getElementById('paymentModal').classList.remove('active');
+  }
+  function closeShamPage() {
+    document.getElementById('shamPage').classList.remove('active');
+  }
+
+  // ===================== CLOSE WITH ESCAPE =====================
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeCryptoPage();
+      closeCardPage();
+      closePaypalPage();
+      closeShamPage();
+      closePaymentModal();
+    }
+  });
+
+  // ===================== WEEKLY TIMER (Sunday to Saturday) =====================
+  (function() {
+    function getEndOfWeek() {
+      const now = new Date();
+      // يوم الأحد = 0، السبت = 6
+      const currentDay = now.getDay(); // 0=الأحد, 6=السبت
+      // عدد الأيام المتبقية حتى نهاية السبت (6)
+      let daysUntilSaturday = 6 - currentDay;
+      if (daysUntilSaturday < 0) daysUntilSaturday += 7;
+      if (daysUntilSaturday === 0 && now.getHours() === 0 && now.getMinutes() === 0 && now.getSeconds() === 0) {
+        daysUntilSaturday = 7;
+      }
+      const end = new Date(now);
+      end.setDate(end.getDate() + daysUntilSaturday);
+      end.setHours(23, 59, 59, 999);
+      return end.getTime();
     }
 
+    let endTime = localStorage.getItem('weeklyTimerEnd');
+    const now = Date.now();
+
+    if (!endTime || now > parseInt(endTime)) {
+      endTime = getEndOfWeek();
+      localStorage.setItem('weeklyTimerEnd', endTime);
+    }
+
+    function updateOfferTimer() {
+      const now = Date.now();
+      let remaining = Math.floor((parseInt(endTime) - now) / 1000);
+
+      if (remaining <= 0) {
+        endTime = getEndOfWeek();
+        localStorage.setItem('weeklyTimerEnd', endTime);
+        remaining = Math.floor((parseInt(endTime) - now) / 1000);
+      }
+
+      const days = Math.floor(remaining / 86400);
+      const hours = Math.floor((remaining % 86400) / 3600);
+      const minutes = Math.floor((remaining % 3600) / 60);
+      const seconds = remaining % 60;
+
+      document.getElementById('offerDays').innerText = String(days).padStart(2, '0');
+      document.getElementById('offerHours').innerText = String(hours).padStart(2, '0');
+      document.getElementById('offerMinutes').innerText = String(minutes).padStart(2, '0');
+      document.getElementById('offerSeconds').innerText = String(seconds).padStart(2, '0');
+    }
+
+    updateOfferTimer();
+    setInterval(updateOfferTimer, 1000);
+  })();
+
+  // ===================== STORY TOGGLE =====================
+  document.getElementById('storyToggleBtn').addEventListener('click', function() {
+    const extra = document.getElementById('storyExtra');
+    if (extra.classList.contains('story-hidden')) {
+      extra.classList.remove('story-hidden');
+      this.textContent = 'إظهار أقل';
+    } else {
+      extra.classList.add('story-hidden');
+      this.textContent = 'عرض المزيد…';
+    }
+  });
+
+  // ===================== FAQ TOGGLE =====================
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.querySelector('.faq-question').addEventListener('click', function() {
+      const parent = this.closest('.faq-item');
+      const isActive = parent.classList.contains('active');
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('active');
+        const icon = i.querySelector('.faq-question i.fas');
+        if (icon) { icon.classList.remove('fa-minus'); icon.classList.add('fa-plus'); }
+      });
+      if (!isActive) {
+        parent.classList.add('active');
+        const icon = parent.querySelector('.faq-question i.fas');
+        if (icon) { icon.classList.remove('fa-plus'); icon.classList.add('fa-minus'); }
+      }
+    });
+  });
+
+  // ===================== STICKY HEADER =====================
+  const stickyHeader = document.getElementById('stickyHeader');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 150) {
+      stickyHeader.classList.add('scrolled');
+    } else {
+      stickyHeader.classList.remove('scrolled');
+    }
+  });
+
+  // ===================== STATIONS DATA =====================
+  (function() {
     const stationsData = [
-      { title: 'بناء عقلية النجاح', image: 'images/station-1.jpg',
+      { title: 'بناء عقلية النجاح', image: 'images/station-1.png',
         points: ['في البداية رح نفهم كيف يفكر صانع المحتوى والشخص الذي يربح من الإنترنت، وكيف يدير مشاريعه وكيف يفكر','عقلية النجاح','كيف يفكر صانع المحتوى المحترف','كيف بلشوا المليونيرية في رحلتهم'] },
-      { title: 'إختيار أفضل مجال', image: 'images/station-2.jpg',
+      { title: 'إختيار أفضل مجال', image: 'images/station-2.png',
         points: ['رح تتعلم كيف تختار لك أفضل مجال تبدأ فيها، ومن ثم سأعطيك أفضل المجالات التي اثبتت فعاليتها يمكنك البدأ فيهم','ستتعلم كيف تختار مجال مربح','أختيار أفضل مجال','أفضل المجالات في مشروع الذكاء الاصطناعي'] },
-      { title: 'إنشاء حسابات احترافية', image: 'images/station-3.jpg',
+      { title: 'إنشاء حسابات احترافية', image: 'images/station-3.png',
         points: ['حسابك هو واجهتك الرقمية، لذلك ستتعلم في ريبل ستارت تصميم الصور، وكيف تجعل حساباتك على مواقع التواصل بأفضل مظهر ممكن، بحيث تجذب الناس لحسابك','ستتعلم تصميم الصور (شعار، هايلات…)','كيفية جعل حساباتك بمظهر جذاب واحترافي','كتابة اسم ويوزر نيم وبايو احترافي، وتصميم رابط بايو عصري'] },
-      { title: 'إستراتيجيات نمو الحسابات والقنوات', image: 'images/station-4.jpg',
+      { title: 'إستراتيجيات نمو الحسابات والقنوات', image: 'images/station-4.png',
         points: ['ستتعلم إستراتيجياتي الشخصية والأسرار التي ساعدوني في الوصول إلى 90 الف متابع وملايين المشاهدات في شهرين فقط','أسرار واستراتيجيات نمو الحسابات','سر الحصول على أفكار محتوى ناجحة','فهم خوارزميات مواقع التواصل واستغلالهم لصالحك'] },
-      { title: 'إنشاء أو بيع منتجات رقمية', image: 'images/station-5.jpg',
+      { title: 'إنشاء أو بيع منتجات رقمية', image: 'images/station-5.png',
         points: ['سوف تتعلم أسرار الذكاء الاصطناعي وكيف تستغلها لإنشاء منتج رقمي خاص بك لمرة، وتقوم ببيع نفس المنتج مدى الحياة، وكل هذا بشكل مجاني، وأيضًا ستتعلم كيف تبيع منتجات رقمية جاهز خطوة بخطوة','ستحصل على منتجات رقمية جاهزة في مجالات مربحة يمكنك بيعهم فورًا','كيفية استغلال الذكاء الاصطناعي لإنشاء منتج رقمي خاص بك','كيف تبيع المنتجات الرقمية خطوة بخطوة باحترافية'] },
-      { title: 'إنشاء متجر', image: 'images/station-6.jpg',
+      { title: 'إنشاء متجر', image: 'images/station-6.png',
         points: ['ستتعلم كيف تنشئ لك متجر خطوة بخطوة لبيع منتجاتك فيه، ستنشئ لك متجر توفر فيه بوابات دفع عالمية','توفير طرق دفع عالمية لعملائك (باي بال، بطاقات الائتمانية…)','كيف كتابة وصف منتجاتك وتصميم صور المتجر','ومن ثم ستتعلم كيف تسحب أرباحك من المتجر وين ما كنت'] },
-      { title: 'أسرار وإستراتيجيات التسويق بالمحتوى', image: 'images/station-7.jpg',
+      { title: 'أسرار وإستراتيجيات التسويق بالمحتوى', image: 'images/station-7.png',
         points: ['ستتعلم استراتيجية الثلاث مراحل لتحويل أي شخص إلى مشتري، وستحصل على أسرار التسويق بالمحتوى وزيادة المبيعات','استراتيجية الثلاث مراحل لمضاعفة المبيعات','استراتيجية التسويق العصبي','سر التسويق كالمحترفين لتحقيق نتائج قوية'] },
-      { title: 'مونتاج الفيديوهات', image: 'images/station-8.jpg',
+      { title: 'مونتاج الفيديوهات', image: 'images/station-8.png',
         points: ['ستتعلم أساليب مختلفة من مونتاج الفيديوهات لصناعة المحتوى بطرق وأساليب مختلفة، أحد هذه الأساليب (style) هو صناعة المحتوى دون الحاجة إلى إظهار وجهك ولا صوتك، ستتمكن من البدأ في مشروعك بأسهل وأسرع طريقة','ستتعلم ثلاث أساليب مختلفة لصناعة المحتوى','أسلوب صناعة المحتوى مجهول الهوية','يمكنك البدأ والمونتاج وصناعة المحتوى بهاتفك فقط'] }
     ];
-    const container = $('stationsContainer');
+    const container = document.getElementById('stationsContainer');
     stationsData.forEach((s, idx) => {
-      const item = document.createElement('div'); item.className = 'station-item reveal-scale'; item.dataset.index = idx; item.dataset.delay = String(100 + idx * 50);
-      const card = document.createElement('div'); card.className = 'station-card';
+      const item = document.createElement('div');
+      item.className = 'station-item reveal-scale';
+      item.dataset.delay = String(100 + idx * 50);
+      const card = document.createElement('div');
+      card.className = 'station-card';
       let imageHtml = s.image ? `<img src="${s.image}" alt="${s.title}" class="station-image" loading="lazy" onerror="this.style.display='none'">` : '';
       let pointsHtml = '';
       s.points.forEach((p, i) => {
@@ -791,145 +1425,125 @@
         else pointsHtml += `<div class="station-point"><i class="fas fa-check"></i><span>${p}</span></div>`;
       });
       card.innerHTML = imageHtml + `<h3>${s.title}</h3><div class="station-points">${pointsHtml}</div>`;
-      item.appendChild(card); container.appendChild(item);
+      item.appendChild(card);
+      container.appendChild(item);
     });
-
-    const revealElements = document.querySelectorAll('[class*="reveal-"]');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting) {
-          const el = entry.target;
-          const delay = el.dataset.delay ? parseInt(el.dataset.delay) : 0;
-          setTimeout(() => el.classList.add('visible'), delay);
-          observer.unobserve(el);
-        }
-      });
-    }, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
-    revealElements.forEach(el => observer.observe(el));
-
-    let separatorTicking = false;
-    function updateAllSeparators() {
-      if (separatorTicking) return;
-      separatorTicking = true;
-      requestAnimationFrame(() => {
-        const lines = document.querySelectorAll('.separator-vertical-line');
-        lines.forEach(line => {
-          const cont = line.closest('.separator-line-container');
-          if (!cont) return;
-          const rect = cont.getBoundingClientRect();
-          if (rect.bottom < 0 || rect.top > window.innerHeight) return;
-          const windowHeight = window.innerHeight;
-          const start = rect.top + rect.height * 0.2;
-          const end = rect.top + rect.height * 0.8;
-          let progress = (windowHeight - start) / (end - start);
-          progress = Math.max(0, Math.min(1, progress));
-          line.style.transform = `translateX(-50%) scaleY(${progress})`;
-        });
-        separatorTicking = false;
-      });
-    }
-    window.addEventListener('scroll', updateAllSeparators, { passive: true });
-    updateAllSeparators();
-
-    $('roadmapLines').innerHTML = '';
-
-    const featureLineFill = $('featureLineFill'), featureSection = $('featureGridSection'), featureVerticalLine = $('featureVerticalLine'), dot = $('featureDot');
-    const firstImage = document.querySelector('#featureBlock1 .feature-image'), lastFeatureItem = $('lastFeatureItem');
-    let featureTicking = false;
-    function updateFeatureLine() {
-      if (featureTicking) return;
-      featureTicking = true;
-      requestAnimationFrame(() => {
-        if (!featureLineFill || !featureSection || !firstImage || !lastFeatureItem) { featureTicking = false; return; }
-        const sectionRect = featureSection.getBoundingClientRect();
-        if (sectionRect.bottom < 0 || sectionRect.top > window.innerHeight) { featureTicking = false; return; }
-        const imageRect = firstImage.getBoundingClientRect();
-        const lastItemRect = lastFeatureItem.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        const startY = imageRect.top + (imageRect.height / 2) - sectionRect.top;
-        const endY = lastItemRect.bottom - sectionRect.top + 10;
-        featureVerticalLine.style.top = startY + 'px';
-        featureVerticalLine.style.height = (endY - startY) + 'px';
-        const startTrigger = sectionRect.top + startY + windowHeight * 0.5;
-        const endTrigger = sectionRect.top + endY;
-        let progress = (windowHeight - startTrigger) / (endTrigger - startTrigger);
-        progress = Math.max(0, Math.min(1, progress));
-        featureLineFill.style.transform = `scaleY(${progress})`;
-        let dotY = (endY - startY) * progress; dotY = Math.max(0, Math.min(endY - startY, dotY));
-        dot.style.top = dotY + 'px';
-        if (sectionRect.top < windowHeight && sectionRect.bottom > 0) featureVerticalLine.classList.add('visible');
-        else featureVerticalLine.classList.remove('visible');
-        featureTicking = false;
-      });
-    }
-    window.addEventListener('scroll', updateFeatureLine, { passive: true });
-    window.addEventListener('resize', updateFeatureLine);
-    setTimeout(updateFeatureLine, 200);
-
-    document.querySelectorAll('.faq-item').forEach(item => {
-      item.querySelector('.faq-question').addEventListener('click', () => {
-        const isActive = item.classList.contains('active');
-        document.querySelectorAll('.faq-item').forEach(i => {
-          i.classList.remove('active');
-          const icon = i.querySelector('.faq-question i.fas');
-          if (icon) { icon.classList.remove('fa-minus'); icon.classList.add('fa-plus'); icon.style.transform = 'rotate(0deg)'; }
-        });
-        if(!isActive) {
-          item.classList.add('active');
-          const icon = item.querySelector('.faq-question i.fas');
-          if (icon) { icon.classList.remove('fa-plus'); icon.classList.add('fa-minus'); icon.style.transform = 'rotate(180deg)'; }
-        }
-      });
-    });
-
-    const stickyHeader = $('stickyHeader');
-    function handleHeaderScroll() { const scrolled = window.scrollY > 150; stickyHeader.classList.toggle('scrolled', scrolled); }
-    window.addEventListener('scroll', handleHeaderScroll, { passive: true }); handleHeaderScroll();
-
-    (function() {
-      const RESET_THRESHOLD = 30;
-      function getNextMidnightUTC() { const now = new Date(); return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0,0,0,0)).getTime(); }
-      let endTime = getNextMidnightUTC();
-      function updateOfferTimer() {
-        const now = Date.now(); let remaining = Math.floor((endTime - now) / 1000);
-        if (remaining <= RESET_THRESHOLD) { endTime = getNextMidnightUTC() + 24*3600*1000; remaining = Math.floor((endTime - now) / 1000); }
-        const h = Math.floor(remaining/3600), m = Math.floor((remaining%3600)/60), s = remaining%60;
-        $('offerHours').innerText = h<10?'0'+h:h; $('offerMinutes').innerText = m<10?'0'+m:m; $('offerSeconds').innerText = s<10?'0'+s:s;
-      }
-      updateOfferTimer(); setInterval(updateOfferTimer, 1000);
-    })();
-
-    const pathContainer = document.getElementById('pathContainer'), svgLines = document.getElementById('svgLines');
-    const titleEl = document.querySelector('.choices-section .section-title'), card1 = document.getElementById('card1'), card2 = document.getElementById('card2');
-    function updatePath() {
-      if (!pathContainer || !svgLines || !titleEl || !card1 || !card2) return;
-      const containerRect = pathContainer.getBoundingClientRect();
-      const titleRect = titleEl.getBoundingClientRect();
-      const card1Rect = card1.getBoundingClientRect(), card2Rect = card2.getBoundingClientRect();
-      const startX = titleRect.left + titleRect.width/2 - containerRect.left;
-      const startY = titleRect.bottom - containerRect.top + 5;
-      const isMobile = window.innerWidth < 640;
-      const midX = isMobile ? Math.max(10, containerRect.width * 0.04) : containerRect.width * 0.06;
-      const midY = startY + 40;
-      const dot1Y = card1Rect.top + card1Rect.height/2 - containerRect.top;
-      const dot2Y = card2Rect.top + card2Rect.height * 0.35 - containerRect.top;
-      const endY = dot2Y;
-      const d = `M ${startX} ${startY} L ${startX} ${midY} L ${midX} ${midY} L ${midX} ${endY}`;
-      const gradient = `
-        <defs><linearGradient id="lineGrad" x1="0%" y1="0%" x2="0%" y2="100%" gradientUnits="userSpaceOnUse" y1="${startY}" y2="${endY}">
-          <stop offset="0%" stop-color="#ffffff" />
-          <stop offset="${(dot1Y - startY) / (endY - startY) * 100 - 20}%" stop-color="#ffffff" />
-          <stop offset="${(dot1Y - startY) / (endY - startY) * 100 + 15}%" stop-color="#00e676" />
-          <stop offset="100%" stop-color="#00e676" />
-        </linearGradient></defs>`;
-      svgLines.innerHTML = gradient + `
-        <path d="${d}" stroke="url(#lineGrad)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-        <circle cx="${midX}" cy="${dot1Y}" r="6" fill="#ffffff" stroke="#ffffff" stroke-width="2" />
-        <circle cx="${midX}" cy="${dot2Y}" r="6" fill="#00e676" stroke="#00e676" stroke-width="2"><animate attributeName="r" values="6;8;6" dur="2s" repeatCount="indefinite" /></circle>`;
-    }
-    window.addEventListener('load', updatePath); window.addEventListener('resize', updatePath);
-    setTimeout(updatePath, 200);
   })();
+
+  // ===================== REVEAL ANIMATIONS =====================
+  const revealElements = document.querySelectorAll('[class*="reveal-"]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const delay = el.dataset.delay ? parseInt(el.dataset.delay) : 0;
+        setTimeout(() => el.classList.add('visible'), delay);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0, rootMargin: '0px 0px 0px 0px' });
+  revealElements.forEach(el => observer.observe(el));
+
+  // ===================== SEPARATOR LINES =====================
+  let separatorTicking = false;
+  function updateAllSeparators() {
+    if (separatorTicking) return;
+    separatorTicking = true;
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.separator-vertical-line').forEach(line => {
+        const cont = line.closest('.separator-line-container');
+        if (!cont) return;
+        const rect = cont.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > window.innerHeight) { separatorTicking = false; return; }
+        const windowHeight = window.innerHeight;
+        const start = rect.top + rect.height * 0.2;
+        const end = rect.top + rect.height * 0.8;
+        let progress = (windowHeight - start) / (end - start);
+        progress = Math.max(0, Math.min(1, progress));
+        line.style.transform = `translateX(-50%) scaleY(${progress})`;
+      });
+      separatorTicking = false;
+    });
+  }
+  window.addEventListener('scroll', updateAllSeparators, { passive: true });
+  updateAllSeparators();
+
+  // ===================== FEATURE LINE =====================
+  const featureLineFill = document.getElementById('featureLineFill');
+  const featureSection = document.getElementById('featureGridSection');
+  const featureVerticalLine = document.getElementById('featureVerticalLine');
+  const dot = document.getElementById('featureDot');
+  const firstImage = document.querySelector('#featureBlock1 .feature-image');
+  const lastFeatureItem = document.getElementById('lastFeatureItem');
+  let featureTicking = false;
+
+  function updateFeatureLine() {
+    if (featureTicking) return;
+    featureTicking = true;
+    requestAnimationFrame(() => {
+      if (!featureLineFill || !featureSection || !firstImage || !lastFeatureItem) { featureTicking = false; return; }
+      const sectionRect = featureSection.getBoundingClientRect();
+      if (sectionRect.bottom < 0 || sectionRect.top > window.innerHeight) { featureTicking = false; return; }
+      const imageRect = firstImage.getBoundingClientRect();
+      const lastItemRect = lastFeatureItem.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      const startY = imageRect.top + (imageRect.height / 2) - sectionRect.top;
+      const endY = lastItemRect.bottom - sectionRect.top + 10;
+      featureVerticalLine.style.top = startY + 'px';
+      featureVerticalLine.style.height = (endY - startY) + 'px';
+      const startTrigger = sectionRect.top + startY + windowHeight * 0.5;
+      const endTrigger = sectionRect.top + endY;
+      let progress = (windowHeight - startTrigger) / (endTrigger - startTrigger);
+      progress = Math.max(0, Math.min(1, progress));
+      featureLineFill.style.transform = `scaleY(${progress})`;
+      let dotY = (endY - startY) * progress;
+      dotY = Math.max(0, Math.min(endY - startY, dotY));
+      dot.style.top = dotY + 'px';
+      if (sectionRect.top < windowHeight && sectionRect.bottom > 0) featureVerticalLine.classList.add('visible');
+      else featureVerticalLine.classList.remove('visible');
+      featureTicking = false;
+    });
+  }
+  window.addEventListener('scroll', updateFeatureLine, { passive: true });
+  window.addEventListener('resize', updateFeatureLine);
+  setTimeout(updateFeatureLine, 200);
+
+  // ===================== PATH LINES =====================
+  function updatePath() {
+    const pathContainer = document.getElementById('pathContainer');
+    const svgLines = document.getElementById('svgLines');
+    const titleEl = document.querySelector('.choices-section .section-title');
+    const card1 = document.getElementById('card1');
+    const card2 = document.getElementById('card2');
+    if (!pathContainer || !svgLines || !titleEl || !card1 || !card2) return;
+    const containerRect = pathContainer.getBoundingClientRect();
+    const titleRect = titleEl.getBoundingClientRect();
+    const card1Rect = card1.getBoundingClientRect();
+    const card2Rect = card2.getBoundingClientRect();
+    const startX = titleRect.left + titleRect.width/2 - containerRect.left;
+    const startY = titleRect.bottom - containerRect.top + 5;
+    const isMobile = window.innerWidth < 640;
+    const midX = isMobile ? Math.max(10, containerRect.width * 0.04) : containerRect.width * 0.06;
+    const midY = startY + 40;
+    const dot1Y = card1Rect.top + card1Rect.height/2 - containerRect.top;
+    const dot2Y = card2Rect.top + card2Rect.height * 0.35 - containerRect.top;
+    const endY = dot2Y;
+    const d = `M ${startX} ${startY} L ${startX} ${midY} L ${midX} ${midY} L ${midX} ${endY}`;
+    const gradient = `
+      <defs><linearGradient id="lineGrad" x1="0%" y1="0%" x2="0%" y2="100%" gradientUnits="userSpaceOnUse" y1="${startY}" y2="${endY}">
+        <stop offset="0%" stop-color="#ffffff" />
+        <stop offset="${(dot1Y - startY) / (endY - startY) * 100 - 20}%" stop-color="#ffffff" />
+        <stop offset="${(dot1Y - startY) / (endY - startY) * 100 + 15}%" stop-color="#00e676" />
+        <stop offset="100%" stop-color="#00e676" />
+      </linearGradient></defs>`;
+    svgLines.innerHTML = gradient + `
+      <path d="${d}" stroke="url(#lineGrad)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="${midX}" cy="${dot1Y}" r="6" fill="#ffffff" stroke="#ffffff" stroke-width="2" />
+      <circle cx="${midX}" cy="${dot2Y}" r="6" fill="#00e676" stroke="#00e676" stroke-width="2"><animate attributeName="r" values="6;8;6" dur="2s" repeatCount="indefinite" /></circle>`;
+  }
+  window.addEventListener('load', updatePath);
+  window.addEventListener('resize', updatePath);
+  setTimeout(updatePath, 200);
 </script>
 </body>
 </html>
