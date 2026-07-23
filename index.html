@@ -75,64 +75,25 @@
     .sticky-header.scrolled .header-border-red { display: none; }
     .header-content { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; width: 100%; }
     .header-badge { display: flex; align-items: center; gap: 6px; }
-    .header-text { font-size: 14px; font-weight: 700; color: #e5e7eb; }
+    .header-text-sm { font-size: 13px; font-weight: 600; color: #e5e7eb; }
     .header-discount { font-size: 14px; font-weight: 900; color: #ff0000; margin: 0 4px; }
-    .header-timer { display: flex; align-items: center; gap: 6px; }
-    .header-timer .time-number { font-size: 18px; font-weight: 800; color: #ff0000; }
-    .header-timer .time-label { font-size: 12px; color: #9ca3af; }
-    .header-timer .time-separator { font-size: 16px; color: #6b7280; }
-    .header-border-red {
-      position: absolute; bottom: 0; left: 0; right: 0; width: 100%; height: 1.5px;
-      background: linear-gradient(90deg, transparent, #ff0000, #ff4444, #ff0000, transparent);
-      box-shadow: 0 0 6px rgba(255, 0, 0, 0.5);
-    }
-
-    /* تنسيق عداد الوقت */
-    .timer-wrapper {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .timer-item {
-      display: flex;
-      align-items: center;
-      gap: 2px;
-      background: rgba(255,255,255,0.05);
-      padding: 2px 8px;
-      border-radius: 8px;
-      border: 1px solid rgba(255,0,0,0.1);
-    }
-    .timer-item .num {
-      font-size: 16px;
-      font-weight: 800;
-      color: #ff0000;
-      min-width: 20px;
-      text-align: center;
-    }
-    .timer-item .lbl {
-      font-size: 10px;
-      color: #9ca3af;
-      font-weight: 500;
-    }
-    .timer-sep {
-      color: #6b7280;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .header-text-sm {
-      font-size: 13px;
-      font-weight: 600;
-    }
-
+    .header-timer { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .timer-wrapper { display: flex; align-items: center; gap: 4px; }
+    .timer-item { display: flex; align-items: center; gap: 2px; background: rgba(255,255,255,0.05); padding: 2px 8px; border-radius: 8px; border: 1px solid rgba(255,0,0,0.1); }
+    .timer-item .num { font-size: 16px; font-weight: 800; color: #ff0000; min-width: 20px; text-align: center; }
+    .timer-item .lbl { font-size: 10px; color: #9ca3af; font-weight: 500; }
+    .timer-sep { color: #6b7280; font-size: 14px; font-weight: 700; }
     @media (max-width: 640px) {
       .timer-item .num { font-size: 14px; min-width: 16px; }
       .timer-item .lbl { font-size: 8px; }
       .timer-item { padding: 1px 5px; gap: 1px; }
       .header-text-sm { font-size: 11px; }
       .header-discount { font-size: 12px; }
+    }
+    .header-border-red {
+      position: absolute; bottom: 0; left: 0; right: 0; width: 100%; height: 1.5px;
+      background: linear-gradient(90deg, transparent, #ff0000, #ff4444, #ff0000, transparent);
+      box-shadow: 0 0 6px rgba(255, 0, 0, 0.5);
     }
 
     .roadmap-section { position: relative; padding: 2rem 0 4rem; max-width: 100%; margin: 0 auto; overflow: visible; }
@@ -444,7 +405,6 @@
     .sham-btn { background: rgba(0, 200, 83, 0.5); }
     .card-btn { background: rgba(30, 58, 138, 0.6); border: 1px solid rgba(255,255,255,0.3); }
 
-    /* Page Styles */
     .crypto-page, .card-page, .paypal-page, .sham-page {
       display: none;
       position: fixed;
@@ -809,7 +769,7 @@
           <span class="animated-gradient-text font-black">من الفكرة إلى البيع</span>
         </p>
         <div class="mt-6 lg:hidden reveal-scale" data-delay="350">
-          <img src="images/hero.png" alt="ريبل ستارت" class="hero-image" style="background: transparent; border: none; box-shadow: none;" loading="lazy" onerror="this.style.display='none'">
+          <img src="images/hero.PNG" alt="ريبل ستارت" class="hero-image" style="background: transparent; border: none; box-shadow: none;" loading="lazy" onerror="this.style.display='none'">
         </div>
         <div class="mt-6 flex justify-center lg:justify-start reveal-scale" data-delay="400">
           <button onclick="document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' })" class="group relative inline-flex items-center gap-3 green-gradient text-white font-bold text-xl px-12 py-4 rounded-full green-glow btn-wide">
@@ -838,7 +798,7 @@
         </div>
       </div>
       <div class="flex-1 w-full max-w-xl lg:max-w-none hidden lg:flex flex-col items-center gap-2 reveal-scale" data-delay="200">
-        <img src="images/hero.png" alt="ريبل ستارت" class="hero-image" style="background: transparent; border: none; box-shadow: none;" loading="lazy" onerror="this.style.display='none'">
+        <img src="images/hero.PNG" alt="ريبل ستارت" class="hero-image" style="background: transparent; border: none; box-shadow: none;" loading="lazy" onerror="this.style.display='none'">
         <span class="green-badge mt-2">طريق أول 10,000$</span>
       </div>
     </div>
@@ -853,7 +813,7 @@
     <h2 class="text-2xl sm:text-3xl md:text-3xl lg:text-4xl font-extrabold text-white text-center mb-6 mt-1 reveal-fade-up" data-delay="100">إليك ما ستتمكن من الوصول إليه</h2>
     <div class="grid-2col">
       <div class="feature-block" id="featureBlock1">
-        <img src="images/feature-1.png" alt="8 وحدات من المحتوى" class="feature-image reveal-scale" data-delay="200" loading="lazy" onerror="this.style.backgroundColor='#1a1f2e'; this.style.minHeight='200px'">
+        <img src="images/feature-1.PNG" alt="8 وحدات من المحتوى" class="feature-image reveal-scale" data-delay="200" loading="lazy" onerror="this.style.backgroundColor='#1a1f2e'; this.style.minHeight='200px'">
         <div class="feature-header" id="firstFeatureHeader"><i class="fas fa-layer-group feature-icon-small"></i><h3>8 وحدات من المحتوى</h3></div>
         <div class="feature-list">
           <div class="feature-card flex items-center gap-2 reveal-scale" data-delay="300"><i class="fas fa-check"></i><span class="white-subtext text-sm font-medium">من العقلية إلى سحب الأرباح خطوة بخطوة</span></div>
@@ -862,7 +822,7 @@
         </div>
       </div>
       <div class="feature-block" id="featureBlock2">
-        <img src="images/feature-2.png" alt="دعم من مجتمع خاص" class="feature-image reveal-scale" data-delay="200" loading="lazy" onerror="this.style.backgroundColor='#1a1f2e'; this.style.minHeight='200px'">
+        <img src="images/feature-2.jpg" alt="دعم من مجتمع خاص" class="feature-image reveal-scale" data-delay="200" loading="lazy" onerror="this.style.backgroundColor='#1a1f2e'; this.style.minHeight='200px'">
         <div class="feature-header"><i class="fas fa-users feature-icon-small"></i><h3>دعم من مجتمع خاص</h3></div>
         <div class="feature-list">
           <div class="feature-card flex items-center gap-2 reveal-scale" data-delay="300"><i class="fas fa-check"></i><span class="white-subtext text-sm font-medium">أبدأ رحلتك مع أشخاص لهم نفس تفكيرك</span></div>
@@ -985,7 +945,7 @@
   <div class="pricing-card p-6 md:p-10 relative overflow-hidden">
     <div class="relative-z-10 flex flex-col items-center">
       <div class="pricing-feature-card mb-1 reveal-fade-up flex justify-center" data-delay="75">
-        <img src="images/logo.png" alt="ريبل ستارت - نظام البداية الذكية" loading="lazy" onerror="this.style.minHeight='60px'; this.style.backgroundColor='#1a1f2e'">
+        <img src="images/logo.PNG" alt="ريبل ستارت - نظام البداية الذكية" loading="lazy" onerror="this.style.minHeight='60px'; this.style.backgroundColor='#1a1f2e'">
       </div>
       <p class="sub-heading text-center text-sm md:text-base font-bold mt-0.5 mb-2 reveal-fade-up text-white" data-delay="85">الخريطة الكاملة من الصفر خطوة بخطوة</p>
       <hr class="price-divider mb-6 reveal-fade-up" data-delay="95">
@@ -1099,7 +1059,7 @@
     <h2>💳 الدفع بالعملات الرقمية</h2>
     <p class="sub-text">يمكنك الدفع عبر عملة <strong>USDT</strong> (شبكة TRC20)</p>
     
-    <img src="images/crypto-payment.png" alt="الدفع بالعملات الرقمية" class="crypto-image" loading="lazy" onerror="this.style.display='none'">
+    <img src="images/crypto-payment.jpg" alt="الدفع بالعملات الرقمية" class="crypto-image" loading="lazy" onerror="this.style.display='none'">
     
     <div style="text-align:center; margin: 0.5rem 0 0.8rem;">
       <button class="how-to-btn" onclick="toggleHowToCrypto()">
@@ -1304,9 +1264,7 @@
   (function() {
     function getEndOfWeek() {
       const now = new Date();
-      // يوم الأحد = 0، السبت = 6
-      const currentDay = now.getDay(); // 0=الأحد, 6=السبت
-      // عدد الأيام المتبقية حتى نهاية السبت (6)
+      const currentDay = now.getDay(); // 0=Sunday, 6=Saturday
       let daysUntilSaturday = 6 - currentDay;
       if (daysUntilSaturday < 0) daysUntilSaturday += 7;
       if (daysUntilSaturday === 0 && now.getHours() === 0 && now.getMinutes() === 0 && now.getSeconds() === 0) {
@@ -1394,21 +1352,21 @@
   // ===================== STATIONS DATA =====================
   (function() {
     const stationsData = [
-      { title: 'بناء عقلية النجاح', image: 'images/station-1.png',
+      { title: 'بناء عقلية النجاح', image: 'images/station-1.jpg',
         points: ['في البداية رح نفهم كيف يفكر صانع المحتوى والشخص الذي يربح من الإنترنت، وكيف يدير مشاريعه وكيف يفكر','عقلية النجاح','كيف يفكر صانع المحتوى المحترف','كيف بلشوا المليونيرية في رحلتهم'] },
-      { title: 'إختيار أفضل مجال', image: 'images/station-2.png',
+      { title: 'إختيار أفضل مجال', image: 'images/station-2.jpg',
         points: ['رح تتعلم كيف تختار لك أفضل مجال تبدأ فيها، ومن ثم سأعطيك أفضل المجالات التي اثبتت فعاليتها يمكنك البدأ فيهم','ستتعلم كيف تختار مجال مربح','أختيار أفضل مجال','أفضل المجالات في مشروع الذكاء الاصطناعي'] },
-      { title: 'إنشاء حسابات احترافية', image: 'images/station-3.png',
+      { title: 'إنشاء حسابات احترافية', image: 'images/station-3.jpg',
         points: ['حسابك هو واجهتك الرقمية، لذلك ستتعلم في ريبل ستارت تصميم الصور، وكيف تجعل حساباتك على مواقع التواصل بأفضل مظهر ممكن، بحيث تجذب الناس لحسابك','ستتعلم تصميم الصور (شعار، هايلات…)','كيفية جعل حساباتك بمظهر جذاب واحترافي','كتابة اسم ويوزر نيم وبايو احترافي، وتصميم رابط بايو عصري'] },
-      { title: 'إستراتيجيات نمو الحسابات والقنوات', image: 'images/station-4.png',
+      { title: 'إستراتيجيات نمو الحسابات والقنوات', image: 'images/station-4.jpg',
         points: ['ستتعلم إستراتيجياتي الشخصية والأسرار التي ساعدوني في الوصول إلى 90 الف متابع وملايين المشاهدات في شهرين فقط','أسرار واستراتيجيات نمو الحسابات','سر الحصول على أفكار محتوى ناجحة','فهم خوارزميات مواقع التواصل واستغلالهم لصالحك'] },
-      { title: 'إنشاء أو بيع منتجات رقمية', image: 'images/station-5.png',
+      { title: 'إنشاء أو بيع منتجات رقمية', image: 'images/station-5.jpg',
         points: ['سوف تتعلم أسرار الذكاء الاصطناعي وكيف تستغلها لإنشاء منتج رقمي خاص بك لمرة، وتقوم ببيع نفس المنتج مدى الحياة، وكل هذا بشكل مجاني، وأيضًا ستتعلم كيف تبيع منتجات رقمية جاهز خطوة بخطوة','ستحصل على منتجات رقمية جاهزة في مجالات مربحة يمكنك بيعهم فورًا','كيفية استغلال الذكاء الاصطناعي لإنشاء منتج رقمي خاص بك','كيف تبيع المنتجات الرقمية خطوة بخطوة باحترافية'] },
-      { title: 'إنشاء متجر', image: 'images/station-6.png',
+      { title: 'إنشاء متجر', image: 'images/station-6.jpg',
         points: ['ستتعلم كيف تنشئ لك متجر خطوة بخطوة لبيع منتجاتك فيه، ستنشئ لك متجر توفر فيه بوابات دفع عالمية','توفير طرق دفع عالمية لعملائك (باي بال، بطاقات الائتمانية…)','كيف كتابة وصف منتجاتك وتصميم صور المتجر','ومن ثم ستتعلم كيف تسحب أرباحك من المتجر وين ما كنت'] },
-      { title: 'أسرار وإستراتيجيات التسويق بالمحتوى', image: 'images/station-7.png',
+      { title: 'أسرار وإستراتيجيات التسويق بالمحتوى', image: 'images/station-7.jpg',
         points: ['ستتعلم استراتيجية الثلاث مراحل لتحويل أي شخص إلى مشتري، وستحصل على أسرار التسويق بالمحتوى وزيادة المبيعات','استراتيجية الثلاث مراحل لمضاعفة المبيعات','استراتيجية التسويق العصبي','سر التسويق كالمحترفين لتحقيق نتائج قوية'] },
-      { title: 'مونتاج الفيديوهات', image: 'images/station-8.png',
+      { title: 'مونتاج الفيديوهات', image: 'images/station-8.jpg',
         points: ['ستتعلم أساليب مختلفة من مونتاج الفيديوهات لصناعة المحتوى بطرق وأساليب مختلفة، أحد هذه الأساليب (style) هو صناعة المحتوى دون الحاجة إلى إظهار وجهك ولا صوتك، ستتمكن من البدأ في مشروعك بأسهل وأسرع طريقة','ستتعلم ثلاث أساليب مختلفة لصناعة المحتوى','أسلوب صناعة المحتوى مجهول الهوية','يمكنك البدأ والمونتاج وصناعة المحتوى بهاتفك فقط'] }
     ];
     const container = document.getElementById('stationsContainer');
